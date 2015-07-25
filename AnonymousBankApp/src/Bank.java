@@ -1,70 +1,111 @@
 
-
+import java.util.*;
 import java.sql.*;
 
 public class Bank {
 
-	 // JDBC driver name and database URL
+	 	// JDBC driver name and database URL
 	   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	   static final String DB_URL = "jdbc:mysql://localhost:3306/teamanon";
-//aaa
 	   //  Database credentials
 	   static final String USER = "root";
 	   static final String PASS = "teamano";
-	   
+	   static int userid = 0;
 	   public static void main(String[] args) {
-	   Connection conn = null;
-	   Statement stmt = null;
-	   try{
-	      //STEP 2: Register JDBC driver
-	      Class.forName("com.mysql.jdbc.Driver");
-
-	      //STEP 3: Open a connection
-	      System.out.println("Connecting to database...");
-	      conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-	      //STEP 4: Execute a query
-	      System.out.println("Creating statement...");
-	      stmt = conn.createStatement();
-	      String sql;
-	      sql = "SELECT username, password FROM user";
-	      ResultSet rs = stmt.executeQuery(sql);
-
-	      //STEP 5: Extract data from result set
-	      while(rs.next()){
-	         //Retrieve by column name
-	         String first = rs.getString("username");
-	         String last = rs.getString("password");
-
-	       
-	         System.out.print("username: " + first);
-	         System.out.println("password: " + last);
-	      }
-	      //STEP 6: Clean-up environment
-	      rs.close();
-	      stmt.close();
-	      conn.close();
-	   }catch(SQLException se){
-	      //Handle errors for JDBC
-	      se.printStackTrace();
-	   }catch(Exception e){
-	      //Handle errors for Class.forName
-	      e.printStackTrace();
-	   }finally{
-		    //finally block used to close resources
-		      try{
-		         if(stmt!=null)
-		            stmt.close();
-		      }catch(SQLException se2){
-		      }// nothing we can do
-		      try{
-		         if(conn!=null)
-		            conn.close();
-		      }catch(SQLException se){
-		         se.printStackTrace();
-		      }//end finally try
-		   }//end try
-		   System.out.println("Goodbye!");
-		}//end main
-		}//end Bank class
+		   
+		   int choice = 0;
+		   
+		   
+		   //Prints a welcome message then let user choose to log in or register
+		   System.out.println("Welcome To CCJ Online Bank!");
+		   System.out.println("1.) Login");
+		   System.out.println("2.) Register");
+		   System.out.print("type the number of your choice: ");
+		   
+		   //gets input from user
+		   Scanner in = new Scanner(System.in);
+		   choice = in.nextInt();
+		   //if choice = 1 login if choice = 2 register an account.
+		   if(choice == 1){
+			   //blank
+			   
+		   }else if(choice == 2){
+			   register();
+		   }
+	   }//end of main
+	 
+	   //a function that would register new users in the system  
+	   public static void register(){
+		   
+		   String name;
+		   String username;
+		   String password;
+		   String email;
+		   String birthdate;
+		   
+		   Scanner in2 = new Scanner(System.in);
+		   System.out.print("Enter your name: ");
+		   name = in2.nextLine();
+		   System.out.print("Enter desired username: ");
+		   username = in2.nextLine();
+		   System.out.print("Enter desired password: ");
+		   password = in2.nextLine();
+		   System.out.print("Enter a valid email address: ");
+		   email = in2.nextLine();
+		   System.out.print("Enter your birthdate(YYYY-MM-DD): ");
+		   birthdate = in2.nextLine();
+		   
+		   Connection conn = null;
+		   Statement stmt = null;
+		   try{
+		      //Register JDBC driver
+		      Class.forName("com.mysql.jdbc.Driver");
+		      //Open a connection
+		      conn = DriverManager.getConnection(DB_URL,USER,PASS);
+		      //make a query
+		      String sql;
+		      sql = "INSERT INTO user (iduser, name, username, password, email, birthdate) " +
+		    		  	"VALUES (?,?,?,?,?,?)";
+		      // create prepared statement to organize inputs
+		      PreparedStatement preparedStmt = conn.prepareStatement(sql);
+		      preparedStmt.setInt (1, userid);
+		      preparedStmt.setString (2, name);
+		      preparedStmt.setString (3, username);
+		      preparedStmt.setString (4, password);
+		      preparedStmt.setString (5, email);
+		      preparedStmt.setString (6, birthdate);
+		      //execute statement
+		      preparedStmt.execute();
+          
+		      //close connection
+		      conn.close();
+		      System.out.println("Account Successfully registered");
+		      userid++;
+		      
+		   }catch(SQLException se){
+		      //Handle errors for JDBC
+		      se.printStackTrace();
+		   }catch(Exception e){
+		      //Handle errors for Class.forName
+		      e.printStackTrace();
+		   }finally{
+			    //finally block used to close resources
+			      try{
+			         if(stmt!=null)
+			            stmt.close();
+			      }catch(SQLException se2){
+			      }// nothing we can do
+			      try{
+			         if(conn!=null)
+			            conn.close();
+			      }catch(SQLException se){
+			         se.printStackTrace();
+			      }//end finally try
+			   }//end try
+		   
+	   }//end of register function
 	   
+	   
+	   
+}//end of class
+	 
