@@ -10,7 +10,8 @@ public class Bank {
 	   //  Database credentials
 	   static final String USER = "root";
 	   static final String PASS = "teamano";
-	   static int userid = 0;
+	   
+	   //main method
 	   public static void main(String[] args) {
 		   
 		   int choice = 0;
@@ -27,7 +28,7 @@ public class Bank {
 		   choice = in.nextInt();
 		   //if choice = 1 login if choice = 2 register an account.
 		   if(choice == 1){
-			   //blank
+			  login();
 			   
 		   }else if(choice == 2){
 			   register();
@@ -42,6 +43,9 @@ public class Bank {
 		   String password;
 		   String email;
 		   String birthdate;
+		   
+		   int userid = 0;
+		   
 		   
 		   Scanner in2 = new Scanner(System.in);
 		   System.out.print("Enter your name: ");
@@ -62,7 +66,10 @@ public class Bank {
 		      Class.forName("com.mysql.jdbc.Driver");
 		      //Open a connection
 		      conn = DriverManager.getConnection(DB_URL,USER,PASS);
-		      //make a query
+		      String query;
+		      //query to get last userid to make a new userid for new account
+		     
+		      //make a query to input new user info on database
 		      String sql;
 		      sql = "INSERT INTO user (iduser, name, username, password, email, birthdate) " +
 		    		  	"VALUES (?,?,?,?,?,?)";
@@ -81,7 +88,7 @@ public class Bank {
 		      conn.close();
 		      System.out.println("Account Successfully registered");
 		      userid++;
-		      
+		   
 		   }catch(SQLException se){
 		      //Handle errors for JDBC
 		      se.printStackTrace();
@@ -104,6 +111,22 @@ public class Bank {
 			   }//end try
 		   
 	   }//end of register function
+	   
+	   
+	   public static void login(){
+		   
+		   String username;
+		   String password;
+		   //ask user for username and password
+		   Scanner in3 = new Scanner(System.in);
+		   System.out.print("Enter your username: ");
+		   username = in3.nextLine();
+		   System.out.print("Enter your password");
+		   password = in3.nextLine();
+		   
+		   
+		   
+	   }
 	   
 	   
 	   
