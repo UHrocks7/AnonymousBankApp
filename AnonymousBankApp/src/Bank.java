@@ -131,4 +131,14 @@ public class Bank {
 	   
 	   
 }//end of class
-	 
+
+/*sql = "SELECT iduser FROM user WHERE username = '" + username + "'";
+rs = stmt.executeQuery(sql);
+
+		while(rs.next()){
+		//Retrieve by column name
+		user_id = rs.getString("iduser");
+
+		System.out.println("User ID: " + user_id);
+
+		}*/
