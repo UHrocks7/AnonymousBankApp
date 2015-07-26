@@ -129,12 +129,62 @@ public class Bank {
 		   
 		   String username;
 		   String password;
+		   int check = 0;
 		   //ask user for username and password
 		   Scanner in3 = new Scanner(System.in);
 		   System.out.print("Enter your username: ");
 		   username = in3.nextLine();
 		   System.out.print("Enter your password");
 		   password = in3.nextLine();
+		   
+		   Connection conn = null;
+		   Statement stmt = null;
+		   try{
+		      //Register JDBC driver
+			   Class.forName("com.mysql.jdbc.Driver");
+		      //Open a connection
+		      conn = DriverManager.getConnection(DB_URL,USER,PASS);
+		      
+		      //query check whether user and pass exist, if does returns 1 if not returns 0
+		      String query ="SELECT username, password FROM user WHERE username = ? AND password = ?";
+		      PreparedStatement st =conn.prepareStatement(query);
+		      st.setString(1,username);
+		      st.setString(2,password);
+		      ResultSet resultSet = st.executeQuery();
+		      String rs;
+		      //check whether input is valid or not
+		      if (!resultSet.next() ) {
+		    	    System.out.println("Invalid Username/Password. Please try again\n");
+		    	    login();
+		    	} else {
+		    		System.out.println("Logged in.\n");
+
+		    		//method for bankstatement
+		    	}
+	      
+		      //close connection
+		      conn.close();
+		       
+		   }catch(SQLException se){
+		      //Handle errors for JDBC
+		      se.printStackTrace();
+		   }catch(Exception e){
+		      //Handle errors for Class.forName
+		      e.printStackTrace();
+		   }finally{
+			    //finally block used to close resources
+			      try{
+			         if(stmt!=null)
+			            stmt.close();
+			      }catch(SQLException se2){
+			      }// nothing we can do
+			      try{
+			         if(conn!=null)
+			            conn.close();
+			      }catch(SQLException se){
+			         se.printStackTrace();
+			      }//end finally try
+			   }//end try
 		   
 		   
 		   
@@ -153,4 +203,4 @@ rs = stmt.executeQuery(sql);
 
 		System.out.println("User ID: " + user_id);
 
-	}*/
+	}*/ 
