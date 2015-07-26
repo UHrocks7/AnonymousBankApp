@@ -161,7 +161,7 @@ public class Bank {
 
 		    		//method for bankstatement
 		    	}
-	     //
+	     
 		      //close connection
 		      conn.close();
 		       
