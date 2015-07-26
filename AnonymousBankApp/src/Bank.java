@@ -63,11 +63,23 @@ public class Bank {
 		   Statement stmt = null;
 		   try{
 		      //Register JDBC driver
-		      Class.forName("com.mysql.jdbc.Driver");
+			   Class.forName("com.mysql.jdbc.Driver");
 		      //Open a connection
 		      conn = DriverManager.getConnection(DB_URL,USER,PASS);
 		      String query;
 		      //query to get last userid to make a new userid for new account
+		      query = "SELECT iduser FROM user ORDER BY iduser desc LIMIT 1";
+		      stmt = conn.createStatement();
+	          ResultSet rs;
+	 
+	          rs = stmt.executeQuery(query);
+	          //update the userid to current one/
+	          while (rs.next()) {
+	        	  userid = rs.getInt(1);
+	          }
+	          
+	          userid++;
+	          
 		     
 		      //make a query to input new user info on database
 		      String sql;
@@ -87,7 +99,7 @@ public class Bank {
 		      //close connection
 		      conn.close();
 		      System.out.println("Account Successfully registered");
-		      userid++;
+		      
 		   
 		   }catch(SQLException se){
 		      //Handle errors for JDBC
