@@ -6,10 +6,10 @@ public class Bank {
 
 	 	// JDBC driver name and database URL
 	   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	   static final String DB_URL = "jdbc:mysql://localhost:3306/teamanon";
+	   private static final String DB_URL = "jdbc:mysql://localhost:3306/teamanon";
 	   //  Database credentials
-	   static final String USER = "root";
-	   static final String PASS = "teamano";
+	   private static final String USER = "root";
+	   private static final String PASS = "cmpukahi";
 	   
 	   //main method
 	   public static void main(String[] args) {
@@ -36,7 +36,7 @@ public class Bank {
 	   }//end of main
 	 
 	   //a function that would register new users in the system  
-	   public static void register(){
+	   private static void register(){
 		   
 		   String name;
 		   String username;
@@ -125,7 +125,7 @@ public class Bank {
 	   }//end of register function
 	   
 	   
-	   public static void login(){
+	   private static void login(){
 		   
 		   String username;
 		   String password;
