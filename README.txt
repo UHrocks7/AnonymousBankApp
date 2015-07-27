@@ -24,3 +24,7 @@ database on computer.
 -User interface for program. This is to be done with a GUI. So far, program runs in a console (i.e. Terminal for Mac, Command
 Prompt for Windows).
 -Ability to access bank records (checking and savings accounts) to check balances
+
+----Additional Notes----
+In order to test out our program, Java and MySQL have to be installed on the user's computer. For developers/advanced users,
+the Java Development Kit (JDK) can be installed to edit the code, as well as IDEs like Eclipse and IntelliJIDEA.
