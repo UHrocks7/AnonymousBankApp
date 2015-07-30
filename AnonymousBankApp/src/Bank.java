@@ -16,11 +16,14 @@ public class Bank {
 		   
 		   int choice = 0;
 		   
+		   try{
 		   
+		   while(choice != 3){
 		   //Prints a welcome message then let user choose to log in or register
 		   System.out.println("Welcome To CCJ Online Bank!");
 		   System.out.println("1.) Login");
 		   System.out.println("2.) Register");
+		   System.out.println("3.) Exit");
 		   System.out.print("type the number of your choice: ");
 		   
 		   //gets input from user
@@ -32,6 +35,12 @@ public class Bank {
 			   
 		   }else if(choice == 2){
 			   register();
+			   main(args);
+		   }
+		   
+		   }//end of while
+		   }catch(InputMismatchException e){
+			   System.out.println("Invalid Input. Exiting...");
 		   }
 	   }//end of main
 	 
@@ -43,6 +52,7 @@ public class Bank {
 		   String password;
 		   String email;
 		   String birthdate;
+		   String status = "available";
 		   
 		   int userid = 0;
 		   
@@ -54,11 +64,31 @@ public class Bank {
 		   username = in2.nextLine();
 		   System.out.print("Enter desired password: ");
 		   password = in2.nextLine();
+		   
+		   //check to see if password requirements is fulfilled
+		   
+		   if (isValid(password)) 
+	        {  
+	            //do nothing  
+	        } 
+	        else 
+	        {  
+	        	while(!isValid(password)){
+	            System.out.println("\n\nInvalid Password.");
+	            System.out.println("Password must contain a digit and a letter.");
+	            System.out.println("Password must be atleast 8 characters.");
+	            System.out.println("no special characters allowed.\n");
+	            	          
+	            System.out.print("Enter desired password: ");
+	 		   	password = in2.nextLine();
+	        	}
+	        }  
+		   
 		   System.out.print("Enter a valid email address: ");
 		   email = in2.nextLine();
 		   System.out.print("Enter your birthdate(YYYY-MM-DD): ");
 		   birthdate = in2.nextLine();
-		   
+		  		   
 		   Connection conn = null;
 		   Statement stmt = null;
 		   try{
@@ -83,8 +113,8 @@ public class Bank {
 		     
 		      //make a query to input new user info on database
 		      String sql;
-		      sql = "INSERT INTO user (iduser, name, username, password, email, birthdate) " +
-		    		  	"VALUES (?,?,?,?,?,?)";
+		      sql = "INSERT INTO user (iduser, name, username, password, email, birthdate, status) " +
+		    		  	"VALUES (?,?,?,?,?,?,?)";
 		      // create prepared statement to organize inputs
 		      PreparedStatement preparedStmt = conn.prepareStatement(sql);
 		      preparedStmt.setInt (1, userid);
@@ -93,12 +123,20 @@ public class Bank {
 		      preparedStmt.setString (4, password);
 		      preparedStmt.setString (5, email);
 		      preparedStmt.setString (6, birthdate);
+		      preparedStmt.setString(7, status);
 		      //execute statement
 		      preparedStmt.execute();
+		      
+		      //add userid to bank statement to link account to it		      
+		      sql = "INSERT INTO bank_statement (userid) VALUES (?)";
+		      PreparedStatement preparedStmt2 = conn.prepareStatement(sql);
+		      preparedStmt2.setInt (1, userid);
+		      
+		      preparedStmt2.execute();
           
 		      //close connection
 		      conn.close();
-		      System.out.println("Account Successfully registered");
+		      System.out.println("Account Successfully registered\n");
 		      
 		   
 		   }catch(SQLException se){
@@ -127,9 +165,12 @@ public class Bank {
 	   
 	   public static void login(){
 		   
+		   
+		   
 		   String username;
 		   String password;
 		   int check = 0;
+		   int countattempt = 0;
 		   //ask user for username and password
 		   Scanner in3 = new Scanner(System.in);
 		   System.out.print("Enter your username: ");
@@ -153,15 +194,16 @@ public class Bank {
 		      ResultSet resultSet = st.executeQuery();
 		      String rs;
 		      //check whether input is valid or not
-		      if (!resultSet.next() ) {
-		    	    System.out.println("Invalid Username/Password. Please try again\n");
-		    	    login();
-		    	} else {
-		    		System.out.println("Logged in.\n");
+		      
+		    	  if (!resultSet.next() ) {
+		    		  System.out.println("Invalid Username/Password. Please try again\n");
+		    		  login();
+		    		  countattempt++;
+		    	  } else {
+		    		  System.out.println("Logged in.\n");
 
 		    		//method for bankstatement
-		    	}
-	     
+		    	  }
 		      //close connection
 		      conn.close();
 		       
@@ -185,14 +227,31 @@ public class Bank {
 			         se.printStackTrace();
 			      }//end finally try
 			   }//end try
-		   
-		   
-		   
-	   }
+	   }//end of log in
 	   
 	   
+	   //return true if and only if password:
+       //1. have at least eight characters.
+       //2. consists of only letters and digits.
+	   public static boolean isValid(String password) {  
+	       //returns true or false depending if condition is met
+	        if (password.length() < 8) {   
+	            return false;  
+	        } else {      
+	            char c;  
+	            int count = 1;   
+	            for (int i = 0; i < password.length() - 1; i++) {  
+	                c = password.charAt(i);  
+	                if (!Character.isLetterOrDigit(c)) {          
+	                    return false;  
+	                }  
+	            }  
+	        }  
+	        return true;  
+	    }  
 	   
 }//end of class
+
 
 /*sql = "SELECT iduser FROM user WHERE username = '" + username + "'";
 rs = stmt.executeQuery(sql);
