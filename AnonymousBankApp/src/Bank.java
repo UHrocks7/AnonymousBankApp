@@ -9,7 +9,7 @@ public class Bank {
 	   private static final String DB_URL = "jdbc:mysql://localhost:3306/teamanon";
 	   //  Database credentials
 	   private static final String USER = "root";
-	   private static final String PASS = "cmpukahi";
+	   private static final String PASS = "teamano";
 	   
 	   //main method
 	   public static void main(String[] args) {
