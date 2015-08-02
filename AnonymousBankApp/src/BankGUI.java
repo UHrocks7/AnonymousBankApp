@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.*;
 import java.sql.*;
 
-public class BankGUI extends Frame {
+public class BankGUI extends JFrame implements ItemListener {
 
 	 	// JDBC driver name and database URL
 	   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
@@ -14,49 +14,180 @@ public class BankGUI extends Frame {
 	   private static final String USER = "root";
 	   private static final String PASS = "teamano";
 	   
-	   //TextField choiceField;
-	   TextField nameRegField, usernameRegField, passwordRegField, emailRegField, birthdateRegField;
-	   TextField usernameLoginField, passwordLoginField;
-	   //Label choiceLabel;
-	   Label nameLabel, usernameLabel, passwordLabel, emailLabel, birthdateLabel;
-	   Panel welcomePanel, loginPanel, registerPanel;
-	   Button loginBtn, registerBtn, exitBtn, submitBtn;
+	   //JTextField choiceField;
+	   JTextField nameRegField, usernameRegField, passwordRegField, emailRegField, birthdateRegField;
+	   JTextField usernameLoginField, passwordLoginField;
+	   //JLabel choiceLabel;
+	   JLabel nameRegLabel, usernameRegLabel, passwordRegLabel, emailLabel, birthdateLabel;
+	   JLabel usernameLoginLabel, passwordLoginLabel;
+	   JLabel welcomeMessage = new JLabel("Welcome To CCJ Online Bank!");
+	   JLabel loginMessage, registerMessage;
+	   JPanel welcomePanel;
 	   
-	   //main method
-	   public static void main(String[] args) {
+	   JPanel loginPanel, registerPanel;
+	   JPanel bankApp;
+	   JButton loginBtn, registerBtn, exitBtn, submitLoginBtn, submitRegBtn;
+	   
+	   public void addBankAppComponent(Container appPane) {
+		   //JFrame bankApp;
+		   //bankApp = new JFrame("CCJ Online Bank");
+		   welcomePanel = new JPanel(new FlowLayout());
+		   welcomeMessage = new JLabel("Welcome To CCJ Online Bank!");
+		   welcomePanel.add("Top", welcomeMessage);
+		   JPanel menuPane = new JPanel();
+		   String loginStr = new String("Login Page");
+		   String registerStr = new String("Registration Page");
+		   //String exitStr = new String("Exit");
+		   String menuPaneItems[] = { loginStr, registerStr };
+		   JComboBox cbMenu = new JComboBox(menuPaneItems);
+		   cbMenu.setEditable(false);
+		   cbMenu.addItemListener(this);
+		   menuPane.add(cbMenu);
 		   
-		   int choice = 0;
+		   loginPanel = new JPanel();
+		   loginMessage = new JLabel("Login Page");
+		   usernameLoginLabel = new JLabel("Username: ");
+		   passwordLoginLabel = new JLabel("Password: ");
+		   usernameLoginField = new JTextField("", 20);
+		   passwordLoginField = new JTextField("", 20);
+		   submitLoginBtn = new JButton("Login to Account");
+		   //loginPanel.add("Top", loginMessage);
+		   loginPanel.add(usernameLoginLabel);
+		   loginPanel.add(usernameLoginField);
+		   loginPanel.add(passwordLoginLabel);
+		   loginPanel.add(passwordLoginField);
+		   loginPanel.add("Bottom", submitLoginBtn);
 		   
-		   try{
+		   registerPanel = new JPanel();
+		   registerMessage = new JLabel("Registration Page");
+		   nameRegLabel = new JLabel("Name: ");
+		   usernameRegLabel = new JLabel("Username: ");
+		   passwordRegLabel = new JLabel("Password: ");
+		   emailLabel = new JLabel("Email: ");
+		   birthdateLabel = new JLabel("Birthdate: ");
 		   
-		   while(choice != 3){
-		   //Prints a welcome message then let user choose to log in or register
-		   System.out.println("Welcome To CCJ Online Bank!");
-		   System.out.println("1.) Login");
-		   System.out.println("2.) Register");
-		   System.out.println("3.) Exit");
-		   System.out.print("type the number of your choice: ");
+		   nameRegField = new JTextField("", 30);
+		   usernameRegField = new JTextField("", 20);
+		   passwordRegField = new JTextField("", 20);
+		   emailRegField = new JTextField("", 20);
+		   birthdateRegField = new JTextField("", 10);
+		   submitRegBtn = new JButton("Submit Registration");
 		   
-		   //gets input from user
-		   Scanner in = new Scanner(System.in);
-		   choice = in.nextInt();
-		   //if choice = 1 login if choice = 2 register an account.
-		   if(choice == 1){
-			  login();
+		   //registerPanel.add("Top", registerMessage);
+		   registerPanel.add("Top", nameRegLabel);
+		   registerPanel.add("Bottom", nameRegField);
+		   
+		   registerPanel.add("Left", usernameRegLabel);
+		   registerPanel.add("Right", usernameRegField);
+		   
+		   registerPanel.add("Left", passwordRegLabel);
+		   registerPanel.add("Right", passwordRegField);
+		   
+		   registerPanel.add("Left", emailLabel);
+		   registerPanel.add("Right", emailRegField);
+		   
+		   registerPanel.add("Left", birthdateLabel);
+		   registerPanel.add("Right", birthdateRegField);
+		   registerPanel.add("Bottom", submitRegBtn);
+		   
+		   bankApp = new JPanel(new CardLayout());
+		   bankApp.add(loginPanel, loginStr);
+		   bankApp.add(registerPanel, registerStr);
+		   
+		   appPane.add(welcomePanel, BorderLayout.PAGE_START);
+		   appPane.add(menuPane, BorderLayout.PAGE_START);
+		   appPane.add(bankApp, BorderLayout.CENTER);
+		   //setLayout(new FlowLayout());
+		   
+		   //loginPanel = new JPanel(new FlowLayout());
+		   //registerPanel = new JPanel(new FlowLayout());
+		   
+		   /*nameRegField = new JTextField("", 30);
+		   usernameRegField = new JTextField("", 20);
+		   passwordRegField = new JTextField("", 20);
+		   emailRegField = new JTextField("", 20);
+		   birthdateRegField = new JTextField("", 10);
+		   
+		   usernameLoginField = new JTextField("", 20);
+		   passwordLoginField = new JTextField("", 20);*
+		   
+		   nameLabel = new JLabel("Name: ");
+		   usernameLabel = new JLabel("Username: ");
+		   passwordLabel = new JLabel("Password: ");
+		   emailLabel = new JLabel("Email: ");
+		   birthdateLabel = new JLabel("Birthdate: ");*
+		   
+		   loginBtn = new JButton("Login");
+		   registerBtn = new JButton("Register");
+		   exitBtn = new JButton("Exit");
+		   
+		   
+		  
+		   //welcomeMessage.setFont(welcomeMessage.getFont().deriveFont(Font.BOLD, 14f));
+		   
+		   //loginMessage.setFont(loginMessage.getFont().deriveFont(Font.BOLD, 14f));
+		   
+		   //registerMessage.setFont(registerMessage.getFont().deriveFont(Font.BOLD, 14f));
+		   
+		   //welcomePanel.add(arg0)
+		   welcomePanel.add(welcomeMessage);
+		   welcomePanel.add(loginBtn);
+		   welcomePanel.add(registerBtn);
+		   welcomePanel.add(exitBtn);
+		   
+		   addWindowListener(new WindowAdapter(){
+			  @Override
+			  public void windowClosing(WindowEvent e) { System.exit(0); }
+		   });
+		   //loginBtn.addActionListener(new);
+		   loginBtn.addActionListener(new login());
+		   registerBtn.addActionListener(new register());
+		   exitBtn.addActionListener(new exitProgram());*/
+	   }
+	   
+	   public void itemStateChanged(ItemEvent appEvent) {
+		   CardLayout clApp = (CardLayout)(bankApp.getLayout());
+		   clApp.show(bankApp, (String)appEvent.getItem());
+	   }
+	   
+	   private static void prepareBankApp() {
+		   JFrame window = new JFrame("CCJ Online Bank");
+		   window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		   //window.setDefaultCloseOperation(3);
+		   BankGUI openBank = new BankGUI();
+		   //window.setContentPane(openBank.welcomeMessage);
+		   openBank.addBankAppComponent(window.getContentPane());
+		   //window.setContentPane(openBank.welcomeMessage);
+		   window.pack();
+		   window.setVisible(true);
+	   }
+	   
+	   class exitProgram implements ActionListener {
+		   @Override
+		   public void actionPerformed(ActionEvent e) {
+			   System.exit(0);
+		   }
+	   }
+	   
+	   class register implements ActionListener {
+		   @Override
+		   public void actionPerformed(ActionEvent e) {
+			   //registerPanel = new JPanel(new FlowLayout());
 			   
-		   }else if(choice == 2){
-			   register();
-			   main(args);
+			   
+			   
 		   }
-		   
-		   }//end of while
-		   }catch(InputMismatchException e){
-			   System.out.println("Invalid Input. Exiting...");
+	   }
+	   
+	   class login implements ActionListener {
+		   @Override
+		   public void actionPerformed(ActionEvent e) {
+			   
 		   }
-	   }//end of main
+	   }
 	 
 	   //a function that would register new users in the system  
-	   private static void register(){
+	   /*private static void register(){
 		   
 		   String name;
 		   String username;
@@ -259,7 +390,22 @@ public class BankGUI extends Frame {
 	            }  
 	        }  
 	        return true;  
-	    }   
+	    }   */
+	   
+	   public static void main(String[] args) {
+		   /*JFrame window = new JFrame("CCJ Online Bank");
+		   window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		   //window.setDefaultCloseOperation(3);
+		   BankGUI openBank = new BankGUI();
+		   window.setContentPane(openBank.getContentPane());
+		   window.pack();
+		   window.setVisible(true);*/
+		   javax.swing.SwingUtilities.invokeLater(new Runnable(){
+			   public void run() {
+				   prepareBankApp();
+			   }
+		   });
+	   }
 	   
 }//end of class
 
@@ -274,3 +420,36 @@ rs = stmt.executeQuery(sql);
 		System.out.println("User ID: " + user_id);
 
 	}*/ 
+
+//main method
+/*public static void main(String[] args) {
+	   
+	   int choice = 0;
+	   
+	   try{
+	   
+	   while(choice != 3){
+	   //Prints a welcome message then let user choose to log in or register
+	   System.out.println("Welcome To CCJ Online Bank!");
+	   System.out.println("1.) Login");
+	   System.out.println("2.) Register");
+	   System.out.println("3.) Exit");
+	   System.out.print("type the number of your choice: ");
+	   
+	   //gets input from user
+	   Scanner in = new Scanner(System.in);
+	   choice = in.nextInt();
+	   //if choice = 1 login if choice = 2 register an account.
+	   if(choice == 1){
+		  login();
+		   
+	   }else if(choice == 2){
+		   register();
+		   main(args);
+	   }
+	   
+	   }//end of while
+	   }catch(InputMismatchException e){
+		   System.out.println("Invalid Input. Exiting...");
+	   }
+}//end of main*/
