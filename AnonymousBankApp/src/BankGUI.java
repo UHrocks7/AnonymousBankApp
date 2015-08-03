@@ -293,7 +293,7 @@ public class BankGUI extends JFrame implements ItemListener {
 			    	  if (!resultSet.next() ) {
 			    		  //System.out.println("Invalid Username/Password. Please try again\n");
 			    		  JOptionPane.showMessageDialog(popupMessage, "Invalid Username/Password. Please try again\n");
-			    		 // loginAgain.actionPerformed(e);
+			    		 // loginAgain.actionPerformed(e); 
 			    		  countattempt++;
 			    	  } else {
 			    		  //System.out.println("Logged in.\n");
