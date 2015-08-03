@@ -16,7 +16,6 @@ import java.sql.*;
 
 public class BankGUI extends JFrame implements ItemListener {
 
-	<<<<<<< HEAD
 	// JDBC driver name and database URL
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	private static final String DB_URL = "jdbc:mysql://localhost:3306/teamanon";
@@ -150,152 +149,12 @@ public class BankGUI extends JFrame implements ItemListener {
 	 *
 	 */
 	class exitProgram implements ActionListener {
-		=======
-		// JDBC driver name and database URL
-		static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-		private static final String DB_URL = "jdbc:mysql://localhost:3306/teamanon";
-		//  Database credentials
-		private static final String USER = "root";
-		private static final String PASS = "teamano";
-
-		JTextField nameRegField, usernameRegField, emailRegField, birthdateRegField;
-		JTextField usernameLoginField;
-		JPasswordField passwordRegField, passwordLoginField;
-		JLabel nameRegLabel, usernameRegLabel, passwordRegLabel, emailLabel, birthdateLabel;
-		JLabel usernameLoginLabel, passwordLoginLabel;
-		JLabel welcomeMessage = new JLabel("Welcome To CCJ Online Bank!");
-		JLabel loginMessage, registerMessage;
-		JPanel welcomePanel;
-		JFrame popupMessage;
-		JPanel loginPanel, registerPanel;
-		JPanel bankApp;
-		JButton exitLoginBtn, exitRegBtn, submitLoginBtn, submitRegBtn;
-
-		public void addBankAppComponent(Container appPane) {
-			//JFrame bankApp;
-			//bankApp = new JFrame("CCJ Online Bank");
-			welcomePanel = new JPanel(new FlowLayout());
-			welcomeMessage = new JLabel("Welcome To CCJ Online Bank!");
-			welcomePanel.add("Top", welcomeMessage);
-			exitLoginBtn = new JButton("Exit");
-			exitRegBtn = new JButton("Exit");
-			JPanel menuPane = new JPanel();
-			String loginStr = new String("Login Page");
-			String registerStr = new String("Registration Page");
-			//String exitStr = new String("Exit");
-			String menuPaneItems[] = { loginStr, registerStr };
-			JComboBox cbMenu = new JComboBox(menuPaneItems);
-			cbMenu.setEditable(false);
-			cbMenu.addItemListener(this);
-			menuPane.add(cbMenu);
-
-			loginPanel = new JPanel();
-			loginMessage = new JLabel("Login Page");
-			usernameLoginLabel = new JLabel("Username: ");
-			passwordLoginLabel = new JLabel("Password: ");
-			usernameLoginField = new JTextField("", 20);
-			passwordLoginField = new JPasswordField("", 20);
-			submitLoginBtn = new JButton("Login to Account");
-			loginPanel.add("Top", welcomeMessage);
-			loginPanel.add(usernameLoginLabel);
-			loginPanel.add(usernameLoginField);
-			loginPanel.add(passwordLoginLabel);
-			loginPanel.add(passwordLoginField);
-			loginPanel.add("Bottom", submitLoginBtn);
-			loginPanel.add(exitLoginBtn);
-
-			registerPanel = new JPanel();
-			registerMessage = new JLabel("Registration Page");
-			nameRegLabel = new JLabel("Name: ");
-			usernameRegLabel = new JLabel("Username: ");
-			passwordRegLabel = new JLabel("Password: ");
-			emailLabel = new JLabel("Email: ");
-			birthdateLabel = new JLabel("Birthdate: ");
-
-			nameRegField = new JTextField("", 30);
-			usernameRegField = new JTextField("", 20);
-			passwordRegField = new JPasswordField("", 20);
-			emailRegField = new JTextField("", 20);
-			birthdateRegField = new JTextField("", 10);
-			submitRegBtn = new JButton("Submit Registration");
-
-			registerPanel.add("Top", welcomeMessage);
-			registerPanel.add("Top", nameRegLabel);
-			registerPanel.add("Bottom", nameRegField);
-
-			registerPanel.add("Left", usernameRegLabel);
-			registerPanel.add("Right", usernameRegField);
-
-			registerPanel.add("Left", passwordRegLabel);
-			registerPanel.add("Right", passwordRegField);
-
-			registerPanel.add("Left", emailLabel);
-			registerPanel.add("Right", emailRegField);
-
-			registerPanel.add("Left", birthdateLabel);
-			registerPanel.add("Right", birthdateRegField);
-			registerPanel.add("Bottom", submitRegBtn);
-			registerPanel.add(exitRegBtn);
-
-			bankApp = new JPanel(new CardLayout());
-			bankApp.add(loginPanel, loginStr);
-			bankApp.add(registerPanel, registerStr);
-
-			appPane.add(welcomePanel, BorderLayout.PAGE_START);
-			appPane.add(menuPane, BorderLayout.PAGE_START);
-			appPane.add(bankApp, BorderLayout.CENTER);
-
-			submitLoginBtn.addActionListener(new login());
-			submitRegBtn.addActionListener(new register());
-			exitLoginBtn.addActionListener(new exitProgram());
-			exitRegBtn.addActionListener(new exitProgram());
-			//welcomeMessage.setFont(welcomeMessage.getFont().deriveFont(Font.BOLD, 14f));
-			//loginMessage.setFont(loginMessage.getFont().deriveFont(Font.BOLD, 14f));
-			//registerMessage.setFont(registerMessage.getFont().deriveFont(Font.BOLD, 14f));
-
-		   /*welcomePanel.add(welcomeMessage);
-		   welcomePanel.add(loginBtn);
-		   welcomePanel.add(registerBtn);
-		   welcomePanel.add(exitBtn);*/
-		   
-		   /*addWindowListener(new WindowAdapter(){
-			  @Override
-			  public void windowClosing(WindowEvent e) { System.exit(0); }
-		   });
-		   //loginBtn.addActionListener(new);
-		   //loginBtn.addActionListener(new login());
-		   //registerBtn.addActionListener(new register());*/
-
-		}
-
-		public void itemStateChanged(ItemEvent appEvent) {
-			CardLayout clApp = (CardLayout)(bankApp.getLayout());
-			clApp.show(bankApp, (String)appEvent.getItem());
-		}
-
-		private static void prepareBankApp() {
-			JFrame window = new JFrame("CCJ Online Bank");
-			window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			BankGUI openBank = new BankGUI();
-			openBank.addBankAppComponent(window.getContentPane());
-			window.pack();
-			window.setVisible(true);
-		}
-
-		class exitProgram implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		}
 
-		class register implements ActionListener {
-			>>>>>>> origin/master
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		}
 		/**
 		 * Registers users for Bank app with GUI.
 		 * @author Chris S. Caoagdan
