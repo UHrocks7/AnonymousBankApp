@@ -13,7 +13,7 @@ public class BankGUI extends JFrame implements ItemListener {
 	   private static final String DB_URL = "jdbc:mysql://localhost:3306/teamanon";
 	   //  Database credentials
 	   private static final String USER = "root";
-	   private static final String PASS = "teamano";
+	   private static final String PASS = "cmpukahi";
 	   
 	   JTextField nameRegField, usernameRegField, emailRegField, birthdateRegField;
 	   JTextField usernameLoginField;
