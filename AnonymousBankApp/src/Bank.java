@@ -254,9 +254,10 @@ public class Bank {
 				System.out.println("2. Savings");
 
 
-
+				//stores user selction
 				selection = in.nextInt();
 
+				//chooses account type based on user selection
 				if(selection == 1){
 
 					account = "checking";
@@ -269,6 +270,7 @@ public class Bank {
 
 				}
 
+				//query to retrieve user ID based on who logged in
 				query = "SELECT iduser FROM user WHERE username = '" + username + "'";
 				ResultSet rs = stmt.executeQuery(query);
 
@@ -279,7 +281,7 @@ public class Bank {
 
 			}
 
-
+				//query to retrieve user balance based on who logged in
 				query = "SELECT " + account + " FROM bank_statement WHERE userid = " + user_id + "";
 
 				rs = stmt.executeQuery(query);
