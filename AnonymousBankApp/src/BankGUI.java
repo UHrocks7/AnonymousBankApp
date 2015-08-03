@@ -53,7 +53,7 @@ public class BankGUI extends JFrame implements ItemListener {
 		   usernameLoginField = new JTextField("", 20);
 		   passwordLoginField = new JPasswordField("", 20);
 		   submitLoginBtn = new JButton("Login to Account");
-		   //loginPanel.add("Top", loginMessage);
+		   loginPanel.add("Top", welcomeMessage);
 		   loginPanel.add(usernameLoginLabel);
 		   loginPanel.add(usernameLoginField);
 		   loginPanel.add(passwordLoginLabel);
@@ -76,7 +76,7 @@ public class BankGUI extends JFrame implements ItemListener {
 		   birthdateRegField = new JTextField("", 10);
 		   submitRegBtn = new JButton("Submit Registration");
 		   
-		   //registerPanel.add("Top", registerMessage);
+		   registerPanel.add("Top", welcomeMessage);
 		   registerPanel.add("Top", nameRegLabel);
 		   registerPanel.add("Bottom", nameRegField);
 		   
@@ -175,13 +175,10 @@ public class BankGUI extends JFrame implements ItemListener {
 					   		+ "Password must contain a digit and a letter.\n"
 					   		+ "Password must be at least 8 characters.\n"
 					   		+ "No special characters allowed.\n");
-			            //System.out.println("\n\nInvalid Password.");
-			            //System.out.println("Password must contain a digit and a letter.");
-			            //System.out.println("");
-			            //System.out.println("no special characters allowed.\n");
 			            	          
-			            System.out.print("Enter desired password: ");
+			            //System.out.print("Enter desired password: ");
 			 		   	//passwordStr = in2.nextLine();
+					   passwordStr = "";
 			        	}
 			   }
 			   
@@ -263,7 +260,69 @@ public class BankGUI extends JFrame implements ItemListener {
 	   class login implements ActionListener {
 		   @Override
 		   public void actionPerformed(ActionEvent e) {
+			   String username;
+			   char[] password;
+			   String passwordStr;
+			   int check = 0;
+			   int countattempt = 0;
+
+			   username = usernameLoginField.getText();
+			   password = passwordLoginField.getPassword();
+			   passwordStr = new String(password);
 			   
+			   login loginAgain = new login();
+			   
+			   Connection conn = null;
+			   Statement stmt = null;
+			   try{
+			      //Register JDBC driver
+				   Class.forName("com.mysql.jdbc.Driver");
+			      //Open a connection
+			      conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			      
+			      //query check whether user and pass exist, if does returns 1 if not returns 0
+			      String query ="SELECT username, password FROM user WHERE username = ? AND password = ?";
+			      PreparedStatement st =conn.prepareStatement(query);
+			      st.setString(1,username);
+			      st.setString(2,passwordStr);
+			      ResultSet resultSet = st.executeQuery();
+			      String rs;
+			      //check whether input is valid or not
+			      
+			    	  if (!resultSet.next() ) {
+			    		  //System.out.println("Invalid Username/Password. Please try again\n");
+			    		  JOptionPane.showMessageDialog(popupMessage, "Invalid Username/Password. Please try again\n");
+			    		  loginAgain.actionPerformed(e);
+			    		  countattempt++;
+			    	  } else {
+			    		  //System.out.println("Logged in.\n");
+			    		  JOptionPane.showMessageDialog(popupMessage, "Logged in.\n");
+
+			    		//method for bankstatement
+			    	  }
+			      //close connection
+			      conn.close();
+			       
+			   }catch(SQLException se){
+			      //Handle errors for JDBC
+			      se.printStackTrace();
+			   }catch(Exception e1){
+			      //Handle errors for Class.forName
+			      e1.printStackTrace();
+			   }finally{
+				    //finally block used to close resources
+				      try{
+				         if(stmt!=null)
+				            stmt.close();
+				      }catch(SQLException se2){
+				      }// nothing we can do
+				      try{
+				         if(conn!=null)
+				            conn.close();
+				      }catch(SQLException se){
+				         se.printStackTrace();
+				      }//end finally try
+				   }//end try
 		   }
 	   }
 	   
@@ -397,73 +456,7 @@ public class BankGUI extends JFrame implements ItemListener {
 			   }//end try
 		   
 	   }//end of register function
-	   
-	   
-	   private static void login(){
-		   
-		   
-		   
-		   String username;
-		   String password;
-		   int check = 0;
-		   int countattempt = 0;
-		   //ask user for username and password
-		   Scanner in3 = new Scanner(System.in);
-		   System.out.print("Enter your username: ");
-		   username = in3.nextLine();
-		   System.out.print("Enter your password");
-		   password = in3.nextLine();
-		   
-		   Connection conn = null;
-		   Statement stmt = null;
-		   try{
-		      //Register JDBC driver
-			   Class.forName("com.mysql.jdbc.Driver");
-		      //Open a connection
-		      conn = DriverManager.getConnection(DB_URL,USER,PASS);
-		      
-		      //query check whether user and pass exist, if does returns 1 if not returns 0
-		      String query ="SELECT username, password FROM user WHERE username = ? AND password = ?";
-		      PreparedStatement st =conn.prepareStatement(query);
-		      st.setString(1,username);
-		      st.setString(2,password);
-		      ResultSet resultSet = st.executeQuery();
-		      String rs;
-		      //check whether input is valid or not
-		      
-		    	  if (!resultSet.next() ) {
-		    		  System.out.println("Invalid Username/Password. Please try again\n");
-		    		  login();
-		    		  countattempt++;
-		    	  } else {
-		    		  System.out.println("Logged in.\n");
 
-		    		//method for bankstatement
-		    	  }
-		      //close connection
-		      conn.close();
-		       
-		   }catch(SQLException se){
-		      //Handle errors for JDBC
-		      se.printStackTrace();
-		   }catch(Exception e){
-		      //Handle errors for Class.forName
-		      e.printStackTrace();
-		   }finally{
-			    //finally block used to close resources
-			      try{
-			         if(stmt!=null)
-			            stmt.close();
-			      }catch(SQLException se2){
-			      }// nothing we can do
-			      try{
-			         if(conn!=null)
-			            conn.close();
-			      }catch(SQLException se){
-			         se.printStackTrace();
-			      }//end finally try
-			   }//end try
-	   }//end of log in
 */
 	   
 	   public static void main(String[] args) {
