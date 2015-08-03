@@ -141,10 +141,10 @@ public class Bank {
 		   
 		   }catch(SQLException se){
 		      //Handle errors for JDBC
-		      se.printStackTrace();
+		      System.out.println("Invalid Input. Try Again");
 		   }catch(Exception e){
 		      //Handle errors for Class.forName
-		      e.printStackTrace();
+		     // e.printStackTrace();
 		   }finally{
 			    //finally block used to close resources
 			      try{
@@ -156,7 +156,7 @@ public class Bank {
 			         if(conn!=null)
 			            conn.close();
 			      }catch(SQLException se){
-			         se.printStackTrace();
+			    	  System.out.println("Invalid Input. Try Again");
 			      }//end finally try
 			   }//end try
 		   
@@ -210,10 +210,10 @@ public class Bank {
 		       
 		   }catch(SQLException se){
 		      //Handle errors for JDBC
-		      se.printStackTrace();
+		   
 		   }catch(Exception e){
 		      //Handle errors for Class.forName
-		      e.printStackTrace();
+		      //e.printStackTrace();
 		   }finally{
 			    //finally block used to close resources
 			      try{
@@ -225,7 +225,7 @@ public class Bank {
 			         if(conn!=null)
 			            conn.close();
 			      }catch(SQLException se){
-			         se.printStackTrace();
+			    	  System.out.println("Invalid Input. Try Again");
 			      }//end finally try
 			   }//end try
 	   }//end of log in
@@ -296,10 +296,10 @@ public class Bank {
 
 	}catch(SQLException se){
 		//Handle errors for JDBC
-		se.printStackTrace();
+		//se.printStackTrace();
 	}catch(Exception e){
 		//Handle errors for Class.forName
-		e.printStackTrace();
+		//e.printStackTrace();
 	}finally{
 		//finally block used to close resources
 		try{
@@ -311,8 +311,8 @@ public class Bank {
 			if(conn!=null)
 				conn.close();
 		}catch(SQLException se){
-			se.printStackTrace();
-		}//end finally try
+			 System.out.println("Invalid Input. Try Again");
+			 }//end finally try
 	}//end try
 		}
 	   
