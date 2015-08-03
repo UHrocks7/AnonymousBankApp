@@ -43,7 +43,7 @@ Chris C: Created "BankGUI.java" to create GUI for Bank app. Also added "BankTest
 
 Chase M: Added method to "Bank.java" to access user's records of checking/savings account.
 
-Jaimar S: Fixed password creation/verification function of "Bank.java" to make sure passwords fit certain criteria
+Jaimar S: Fixed password creation/verification function of "Bank.java" to make sure passwords fit certain criteria.
 
 ----Completed Functions/Parts of Program----
 -GUI interface for login and registration pages
@@ -54,4 +54,3 @@ Jaimar S: Fixed password creation/verification function of "Bank.java" to make s
 -Fix login page to handle improper credentials
 -Fix registration page to access database to store registration record
 -Add error handling for "bankstatement()" function of "Bank.java"
--Change how errors are handled in "login()" and "register()" functions of "Bank.java"
