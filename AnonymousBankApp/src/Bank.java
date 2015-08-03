@@ -9,7 +9,7 @@ public class Bank {
 	   private static final String DB_URL = "jdbc:mysql://localhost:3306/teamanon";
 	   //  Database credentials
 	   private static final String USER = "root";
-	   private static final String PASS = "teamano";
+	   private static final String PASS = "cmpukahi";
 	   
 	   //main method
 	   public static void main(String[] args) {
@@ -203,6 +203,7 @@ public class Bank {
 		    		  System.out.println("Logged in.\n");
 
 		    		//method for bankstatement
+					  bankstatement(username);
 		    	  }
 		      //close connection
 		      conn.close();
@@ -228,6 +229,90 @@ public class Bank {
 			      }//end finally try
 			   }//end try
 	   }//end of log in
+
+		public static void bankstatement(String username){
+
+			Statement stmt = null;
+			Connection conn = null;
+			Scanner in = new Scanner(System.in);
+			String query;
+			String user_id = "";
+			int selection;
+			String account = "";
+			String balance = "";
+
+			try{
+
+				//Register JDBC driver
+				Class.forName("com.mysql.jdbc.Driver");
+				//Open a connection
+				conn = DriverManager.getConnection(DB_URL,USER,PASS);
+				stmt = conn.createStatement();
+
+				System.out.println("Please choose an account to check balance");
+				System.out.println("1. Checking");
+				System.out.println("2. Savings");
+
+
+
+				selection = in.nextInt();
+
+				if(selection == 1){
+
+					account = "checking";
+
+				}
+
+				else if(selection == 2){
+
+					account = "savings";
+
+				}
+
+				query = "SELECT iduser FROM user WHERE username = '" + username + "'";
+				ResultSet rs = stmt.executeQuery(query);
+
+				while(rs.next()) {
+					//Retrieve by column name
+					user_id = rs.getString("iduser");
+
+
+			}
+
+
+				query = "SELECT " + account + " FROM bank_statement WHERE userid = " + user_id + "";
+
+				rs = stmt.executeQuery(query);
+
+				while(rs.next()) {
+					//Retrieve by column name
+					balance = rs.getString(account);
+
+					System.out.println("Account Balance: " + balance + "\n");
+
+				}
+
+	}catch(SQLException se){
+		//Handle errors for JDBC
+		se.printStackTrace();
+	}catch(Exception e){
+		//Handle errors for Class.forName
+		e.printStackTrace();
+	}finally{
+		//finally block used to close resources
+		try{
+			if(stmt!=null)
+				stmt.close();
+		}catch(SQLException se2){
+		}// nothing we can do
+		try{
+			if(conn!=null)
+				conn.close();
+		}catch(SQLException se){
+			se.printStackTrace();
+		}//end finally try
+	}//end try
+		}
 	   
 	   
 	   //return true if and only if password:
@@ -253,13 +338,3 @@ public class Bank {
 }//end of class
 
 
-/*sql = "SELECT iduser FROM user WHERE username = '" + username + "'";
-rs = stmt.executeQuery(sql);
-
-		while(rs.next()){
-		//Retrieve by column name
-		user_id = rs.getString("iduser");
-
-		System.out.println("User ID: " + user_id);
-
-	}*/ 
