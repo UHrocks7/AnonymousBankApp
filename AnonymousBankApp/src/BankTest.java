@@ -1,5 +1,6 @@
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayInputStream;
 import java.util.*;
 import java.sql.*;
 import org.junit.Rule;
@@ -14,7 +15,7 @@ public class BankTest {
 	private static final String DB_URL = "jdbc:mysql://localhost:3306/teamanon";
 	//  Database credentials
 	private static final String USER = "root";
-	private static final String PASS = "teamano";
+	private static final String PASS = "cmpukahi";
 	
 	@Rule
 	public ErrorCollector collector = new ErrorCollector();
@@ -77,6 +78,21 @@ public class BankTest {
 	    }
 		
 		//fail("Not yet implemented");
+	}
+
+	//test bankstatement method
+	public void testBankStatement(){
+
+		String username = "chasem";
+
+		Bank statement = new Bank();
+
+		//simulates user input
+		String inputData = "1";
+		System.setIn(new java.io.ByteArrayInputStream(inputData.getBytes()));
+
+		//broken for now, retrns SQL syntax error
+		statement.bankstatement(username);
 	}
 
 }

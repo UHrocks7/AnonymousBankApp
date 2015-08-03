@@ -1,4 +1,4 @@
--------Team Anonymous- Bank App-------
+-------Team Anonymous- Bank App, Version 1-------
 
 ----Team Members----
 Chris Caoagdan
@@ -28,3 +28,30 @@ Prompt for Windows).
 ----Additional Notes----
 In order to test out our program, Java and MySQL have to be installed on the user's computer. For developers/advanced users,
 the Java Development Kit (JDK) can be installed to edit the code, as well as IDEs like Eclipse and IntelliJIDEA.
+
+_____________________________________________________________________________________________________________________________
+
+-------Team Anonymous- Bank App, Version 2-------
+
+----Team Members----
+Chris Caoagdan
+Chase Matayoshi
+Jaimar John Sison
+
+----The division of tasks between team members----
+Chris C: Created "BankGUI.java" to create GUI for Bank app. Also added "BankTest.java" to for JUnit testing.
+
+Chase M: Added method to "Bank.java" to access user's records of checking/savings account.
+
+Jaimar S: Fixed password creation/verification function of "Bank.java" to make sure passwords fit certain criteria
+
+----Completed Functions/Parts of Program----
+-GUI interface for login and registration pages
+-Password creation/verification updated to adher to certain criteria
+-Function to access user's records of checking/savings accounts
+
+----Functions/Parts To Be Completed----
+-Fix login page to handle improper credentials
+-Fix registration page to access database to store registration record
+-Add error handling for "bankstatement()" function of "Bank.java"
+-Change how errors are handled in "login()" and "register()" functions of "Bank.java"
