@@ -188,7 +188,17 @@ public class Bank {
 		      //Open a connection
 		      conn = DriverManager.getConnection(DB_URL,USER,PASS);
 		      
-		      //query check whether user and pass exist, if does returns 1 if not returns 0
+		      String q1 ="SELECT username FROM user WHERE username = ?";
+		      PreparedStatement sttt =conn.prepareStatement(q1);
+		      sttt.setString(1,username);
+		      ResultSet resultSett = sttt.executeQuery();
+		      
+		      //checks if username exist or not then continue to check username and password
+		   if (!resultSett.next() ) {
+			   System.out.print("Username does not exist!\n\n");
+		   }else{ 		 
+		      
+		      //query check whether user and password match, if does returns 1 if not returns 0
 		      String query ="SELECT username, password FROM user WHERE username = ? AND password = ?";
 		      PreparedStatement st =conn.prepareStatement(query);
 		      st.setString(1,username);
@@ -239,8 +249,8 @@ public class Bank {
 		    	  		  System.out.println("Error : Account is disabled.\n Please call Customer Service\n\n.");
 		    	  	  }
 		    	 
-		    		  
-		    	  }
+		    	  }	  
+		   }
 		      //close connection
 		      conn.close();
 		       
