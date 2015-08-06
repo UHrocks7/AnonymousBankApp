@@ -10,6 +10,7 @@ public class Bank {
 	   //  Database credentials
 	   private static final String USER = "root";
 	   private static final String PASS = "teamano";
+	   static int countattempt = 0;
 	   
 	   //main method
 	   public static void main(String[] args) {
@@ -169,8 +170,9 @@ public class Bank {
 		   
 		   String username;
 		   String password;
-		   int check = 0;
-		   int countattempt = 0;
+		   String status = "";
+		  //int check = 0;
+		   
 		   //ask user for username and password
 		   Scanner in3 = new Scanner(System.in);
 		   System.out.print("Enter your username: ");
@@ -196,14 +198,48 @@ public class Bank {
 		      //check whether input is valid or not
 		      
 		    	  if (!resultSet.next() ) {
-		    		  System.out.println("Invalid Username/Password. Please try again\n");
-		    		  login();
-		    		  countattempt++;
+		    		 
+		    		  //disable account if count attempt is equal to 3
+		    		  if(countattempt < 2){
+		    			  System.out.println("Invalid Username/Password. Please try again\n");
+		    			  countattempt++;
+		    			  System.out.println("attempt: " + countattempt);
+		    			  //redirects to login method again if attempt doesnt exceeds 3
+		    			  login();
+		    			  		    		      	    			  
+		    		  }else{
+		    			  String statchange = "disable";
+		    			  // update the status to disable
+		    			  String q ="UPDATE user SET status = ?  WHERE username = ?";
+		    		      PreparedStatement st2 =conn.prepareStatement(q);
+		    		      st2.setString(1,statchange);
+		    		      st2.setString(2,username);
+		    		      st2.execute();
+		    		      	 
+		    		      System.out.println("\nAccount is disabled\n");
+		    		      
+		    			  //redirects to login method again if attempt doesnt exceeds 3
+		    			  
+		    		  }
 		    	  } else {
-		    		  System.out.println("Logged in.\n");
-
-		    		//method for bankstatement
-					  bankstatement(username);
+		    		  String qq = "SELECT status FROM user WHERE username = '" + username + "'";
+				      Statement stmt2 = conn.createStatement();
+			          ResultSet rss = stmt2.executeQuery(qq);
+			          //get the current status of account/
+			          while (rss.next()) {
+			        	  status = rss.toString();
+			          }
+		    		  //checks whether user account is available or disabled
+		    		  //checks the attempts of user
+		    		  if(status == "available"){
+		    			  System.out.println("Logged in.\n");
+		    			  //method for bankstatement
+		    			  bankstatement(username);
+		    	  	  }else{
+		    	  		  System.out.println("Error : Account is disabled.\n Please call Customer Service\n\n.");
+		    	  	  }
+		    	 
+		    		  
 		    	  }
 		      //close connection
 		      conn.close();
