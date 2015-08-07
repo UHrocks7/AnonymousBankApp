@@ -193,7 +193,7 @@ public class Bank {
 		      sttt.setString(1,username);
 		      ResultSet resultSett = sttt.executeQuery();
 		      
-		      //checks if username exist or not then continue to check username and password
+		      //checks if username exist or not, then continue to check username and password
 		   if (!resultSett.next() ) {
 			   System.out.print("Username does not exist!\n\n");
 		   }else{ 		 

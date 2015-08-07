@@ -179,22 +179,29 @@ public class BankGUI extends JFrame implements ItemListener {
 				passwordStr = new String(password);
 				email = emailRegField.getText();
 				birthdate = birthdateRegField.getText();
+				
+				if(UserExist(username)){
+					//shows a warning that username exist already
+					JOptionPane.showMessageDialog(popupMessage, "Username Exist.\n "
+							+ "Please choose another username.\n");
+				}
 
 				if (isValid(passwordStr)) {
+					//do nothing
 
 				}
 				else {
-					while(!isValid(passwordStr)){
-						JOptionPane.showMessageDialog(popupMessage, "Invalid Password.\n"
+					//shows a warning that password need to change
+					JOptionPane.showMessageDialog(popupMessage, "Invalid Password.\n"
 								+ "Password must contain a digit and a letter.\n"
 								+ "Password must be at least 8 characters.\n"
 								+ "No special characters allowed.\n");
 
-						//System.out.print("Enter desired password: ");
-						//passwordStr = in2.nextLine();
-						passwordStr = "";
-					}
 				}
+				
+				// will continue to register if password is valid and username doesnt exist
+				//if not user should change password or username again and submit changes.
+				if(isValid(passwordStr) && !UserExist(username)) {
 
 
 				Connection conn = null;
@@ -247,7 +254,7 @@ public class BankGUI extends JFrame implements ItemListener {
 					JOptionPane.showMessageDialog(popupMessage, "Account Successfully registered\n");
 					//System.out.println("Account Successfully registered\n");
 
-
+				
 				}catch(SQLException se){
 					//Handle errors for JDBC
 					se.printStackTrace();
@@ -268,7 +275,8 @@ public class BankGUI extends JFrame implements ItemListener {
 						se.printStackTrace();
 					}//end finally try
 				}//end try
-			}
+			}//closes if statement
+				}
 		}
 		/**
 		 * Function to login user with proper credentials.
@@ -364,6 +372,49 @@ public class BankGUI extends JFrame implements ItemListener {
 				}
 			}
 			return true;
+		}
+		// checks whether username exist or not for registration
+		public static boolean UserExist(String username) {
+			
+			Connection conn = null;
+			Statement stmt = null;
+			try{
+				
+			Class.forName("com.mysql.jdbc.Driver");
+				//Open a connection
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			String q1 ="SELECT username FROM user WHERE username = ?";
+		      PreparedStatement sttt =conn.prepareStatement(q1);
+		      sttt.setString(1,username);
+		      ResultSet resultSett = sttt.executeQuery();
+		      
+		      if (!resultSett.next() ) {
+				   return false;
+			   }else{
+				   return true;
+			   }
+		      
+			}catch(SQLException se){
+				//Handle errors for JDBC
+				se.printStackTrace();
+			}catch(Exception e1){
+				//Handle errors for Class.forName
+				e1.printStackTrace();
+			}finally{
+				//finally block used to close resources
+				try{
+					if(stmt!=null)
+						stmt.close();
+				}catch(SQLException se2){
+				}// nothing we can do
+				try{
+					if(conn!=null)
+						conn.close();
+				}catch(SQLException se){
+					se.printStackTrace();
+				}//end finally try
+			}//end try
+			return false;
 		}
 
 		/**
