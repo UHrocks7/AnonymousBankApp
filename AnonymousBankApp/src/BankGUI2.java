@@ -311,6 +311,7 @@ public class BankGUI2 {
 		submitRegBtn.addActionListener(new register());
 		registerLogin.addActionListener(new regPage());
 		backLoginPage.addActionListener(new logPage());
+		btnLogOut.addActionListener(new logPage());
 	}
 	
 	//redirects to login page
