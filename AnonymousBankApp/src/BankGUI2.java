@@ -54,7 +54,7 @@ public class BankGUI2 {
 	
 	
 	private JFrame frame;
-	JFrame popupMessage;
+	static JFrame popupMessage;
 	private JTextField usernameLoginField;
 	private JPasswordField passwordLoginField;
 	private JTextField nameRegField;
@@ -64,6 +64,8 @@ public class BankGUI2 {
 	private JTextField birthdateRegField;
 	private CardLayout cardLayout = new CardLayout();
 	private JPanel mainPanel = new JPanel();
+	 JTextArea checkingsField = new JTextArea();
+	 JTextArea savingsField = new JTextArea();
 	int countattempt = 0;
 	String status = "";
 	/**
@@ -295,13 +297,13 @@ public class BankGUI2 {
 		lblCheckings.setBounds(36, 163, 78, 16);
 		statementPanel.add(lblCheckings);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(112, 160, 106, 22);
-		statementPanel.add(textArea);
 		
-		JTextArea textArea_1 = new JTextArea();
-		textArea_1.setBounds(112, 125, 106, 22);
-		statementPanel.add(textArea_1);
+		checkingsField.setBounds(112, 160, 106, 22);
+		statementPanel.add(checkingsField);
+		
+		
+		savingsField.setBounds(112, 125, 106, 22);
+		statementPanel.add(savingsField);
 		
 				
 		//Adds actions to buttons
@@ -529,20 +531,19 @@ public class BankGUI2 {
 			    		  if(status.equals("available")){
 			    			 
 			    			  JOptionPane.showMessageDialog(popupMessage, "Logged in.\n");
-			    			  cardLayout.show(mainPanel, "statementPanel");
+			    			 //ardLayout.show(mainPanel, "statementPanel");
 			    			  //method for bank statement
-			    			  conn.close();
-			    			  bankstatement(username);
+			    			   bankstatement(username);
 			    			  
 			    	  	  }else{
 			    	  		JOptionPane.showMessageDialog(popupMessage, "Account is disabled.\n"
 			    	  				+ "Please call Customer Service.\n");
-			    	  		 conn.close();
+			    	  	
 			    	  	  }
 			    	 
 			    	  }	  
 			   }
-			          
+				 conn.close();
 
 			}catch(SQLException se){
 				//Handle errors for JDBC
@@ -568,8 +569,9 @@ public class BankGUI2 {
 	}
 	
 	//method to check statements of the current user
-	public static void bankstatement(String username){
-
+	public  void bankstatement(String username){
+		cardLayout.show(mainPanel, "statementPanel");
+		
 		Statement stmt = null;
 		Connection conn = null;
 		
@@ -579,7 +581,7 @@ public class BankGUI2 {
 		String checkings = "";
 
 		try{
-
+			
 			//Register JDBC driver
 			Class.forName("com.mysql.jdbc.Driver");
 			//Open a connection
@@ -600,16 +602,21 @@ public class BankGUI2 {
 		}
 
 			//query to retrieve user balance based on who logged in
-			query = "SELECT checkings and savings FROM bank_statement WHERE userid = " + user_id + "";
+			query = "SELECT checking and savings FROM bank_statement WHERE userid = " + user_id + "";
 
 			rs = stmt.executeQuery(query);
 
 			while(rs.next()) {
 				//Retrieve by column name
-				checkings = rs.getString("checkings");
+				checkings = rs.getString("checking");
 				savings = rs.getString("savings");
-			}
-
+			}JOptionPane.showMessageDialog(popupMessage,"hi");
+			JOptionPane.showMessageDialog(popupMessage,"hi");
+			JOptionPane.showMessageDialog(popupMessage, savings);
+			checkingsField.setText(checkings);
+			savingsField.setText(savings);
+			
+		
 }catch(SQLException se){
 	//Handle errors for JDBC
 	//se.printStackTrace();
@@ -627,7 +634,7 @@ public class BankGUI2 {
 		if(conn!=null)
 			conn.close();
 	}catch(SQLException se){
-		 System.out.println("Invalid Input. Try Again");
+		
 		 }//end finally try
 }//end try
 	}
