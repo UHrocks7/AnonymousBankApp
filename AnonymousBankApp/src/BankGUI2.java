@@ -577,8 +577,11 @@ public class BankGUI2 {
 		
 		String query;
 		String user_id = "";
-		String savings = "";
-		String checkings = "";
+		Integer savings = 0;
+		Integer checkings = 0;
+		String savingss = "";
+		String checkingss = "";
+
 
 		try{
 			
@@ -602,19 +605,31 @@ public class BankGUI2 {
 		}
 
 			//query to retrieve user balance based on who logged in
-			query = "SELECT checking and savings FROM bank_statement WHERE userid = " + user_id + "";
-
+			query = "SELECT checking  FROM bank_statement WHERE userid = " + user_id + "";
 			rs = stmt.executeQuery(query);
 
 			while(rs.next()) {
 				//Retrieve by column name
-				checkings = rs.getString("checking");
-				savings = rs.getString("savings");
-			}JOptionPane.showMessageDialog(popupMessage,"hi");
-			JOptionPane.showMessageDialog(popupMessage,"hi");
-			JOptionPane.showMessageDialog(popupMessage, savings);
-			checkingsField.setText(checkings);
-			savingsField.setText(savings);
+				checkings = rs.getInt("checking");
+				//savings = rs.getInt("savings");
+			}
+			checkingss = checkings.toString();
+			//savingss = savings.toString();
+			checkingsField.setText(checkingss);
+			//savingsField.setText(savingss);
+			
+			//query to retrieve user balance based on who logged in
+			query = "SELECT savings  FROM bank_statement WHERE userid = " + user_id + "";
+			rs = stmt.executeQuery(query);
+
+			while(rs.next()) {
+				//Retrieve by column name
+				savings = rs.getInt("savings");
+			}
+			
+			savingss = savings.toString();
+			
+			savingsField.setText(savingss);
 			
 		
 }catch(SQLException se){
