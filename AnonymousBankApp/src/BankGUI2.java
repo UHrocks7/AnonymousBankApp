@@ -17,6 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 
 import javax.swing.Action;
 import javax.swing.JPasswordField;
@@ -30,6 +31,11 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.CardLayout;
 import java.awt.Button;
+import javax.swing.JTable;
+import java.awt.Label;
+import java.awt.Panel;
+import javax.swing.JTextPane;
+import javax.swing.JTextArea;
 
 
 
@@ -263,11 +269,39 @@ public class BankGUI2 {
 		gbc_backLoginPage.gridy = 9;
 		registerPanel.add(backLoginPage, gbc_backLoginPage);
 		
-		
-		
+
 		//shows the first panel that we want to show which is loginpanel
 		cardLayout.show(mainPanel, "loginPanel");
 		
+		
+		JPanel statementPanel = new JPanel();
+		mainPanel.add(statementPanel, "statementPanel");
+		statementPanel.setLayout(null);
+		
+		Label title = new Label("Bank Statement");
+		title.setFont(new Font("Dialog", Font.BOLD, 18));
+		title.setBounds(36, 65, 142, 38);
+		statementPanel.add(title);
+		
+		JButton btnLogOut = new JButton("Log Out");
+		btnLogOut.setBounds(396, 338, 97, 25);
+		statementPanel.add(btnLogOut);
+		
+		JLabel lblSavings = new JLabel("Savings :");
+		lblSavings.setBounds(36, 128, 78, 16);
+		statementPanel.add(lblSavings);
+		
+		JLabel lblCheckings = new JLabel("Checkings :");
+		lblCheckings.setBounds(36, 163, 78, 16);
+		statementPanel.add(lblCheckings);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(112, 160, 106, 22);
+		statementPanel.add(textArea);
+		
+		JTextArea textArea_1 = new JTextArea();
+		textArea_1.setBounds(112, 125, 106, 22);
+		statementPanel.add(textArea_1);
 		
 				
 		//Adds actions to buttons
@@ -495,17 +529,20 @@ public class BankGUI2 {
 			    		  if(status.equals("available")){
 			    			 
 			    			  JOptionPane.showMessageDialog(popupMessage, "Logged in.\n");
-			    			  //method for bankstatement
-			    			  //bankstatement(username);
+			    			  cardLayout.show(mainPanel, "statementPanel");
+			    			  //method for bank statement
+			    			  conn.close();
+			    			  bankstatement(username);
+			    			  
 			    	  	  }else{
 			    	  		JOptionPane.showMessageDialog(popupMessage, "Account is disabled.\n"
 			    	  				+ "Please call Customer Service.\n");
+			    	  		 conn.close();
 			    	  	  }
 			    	 
 			    	  }	  
 			   }
-			      //close connection
-			      conn.close();
+			          
 
 			}catch(SQLException se){
 				//Handle errors for JDBC
@@ -530,6 +567,70 @@ public class BankGUI2 {
 		}
 	}
 	
+	//method to check statements of the current user
+	public static void bankstatement(String username){
+
+		Statement stmt = null;
+		Connection conn = null;
+		
+		String query;
+		String user_id = "";
+		String savings = "";
+		String checkings = "";
+
+		try{
+
+			//Register JDBC driver
+			Class.forName("com.mysql.jdbc.Driver");
+			//Open a connection
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			stmt = conn.createStatement();
+
+
+			
+			//query to retrieve user ID based on who logged in
+			query = "SELECT iduser FROM user WHERE username = '" + username + "'";
+			ResultSet rs = stmt.executeQuery(query);
+
+			while(rs.next()) {
+				//Retrieve by column name
+				user_id = rs.getString("iduser");
+
+
+		}
+
+			//query to retrieve user balance based on who logged in
+			query = "SELECT checkings and savings FROM bank_statement WHERE userid = " + user_id + "";
+
+			rs = stmt.executeQuery(query);
+
+			while(rs.next()) {
+				//Retrieve by column name
+				checkings = rs.getString("checkings");
+				savings = rs.getString("savings");
+			}
+
+}catch(SQLException se){
+	//Handle errors for JDBC
+	//se.printStackTrace();
+}catch(Exception e){
+	//Handle errors for Class.forName
+	//e.printStackTrace();
+}finally{
+	//finally block used to close resources
+	try{
+		if(stmt!=null)
+			stmt.close();
+	}catch(SQLException se2){
+	}// nothing we can do
+	try{
+		if(conn!=null)
+			conn.close();
+	}catch(SQLException se){
+		 System.out.println("Invalid Input. Try Again");
+		 }//end finally try
+}//end try
+	}
 
 	/**
 	 * Checks password for registration if password meets certain criteria, as listed below
