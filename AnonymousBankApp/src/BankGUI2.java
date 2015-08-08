@@ -312,7 +312,13 @@ public class BankGUI2 {
 			passwordStr = new String(password);
 			email = emailRegField.getText();
 			birthdate = birthdateRegField.getText();
-			
+			if(username.equals("")){
+				
+				JOptionPane.showMessageDialog(popupMessage, "Username Field Empty. Please fill it up\n ");
+				
+			}
+			else{
+				
 			if(UserExist(username)){
 				//shows a warning that username exist already
 				JOptionPane.showMessageDialog(popupMessage, "Username Exist.\n "
@@ -387,7 +393,7 @@ public class BankGUI2 {
 				JOptionPane.showMessageDialog(popupMessage, "Account Successfully registered\n");
 				cardLayout.show(mainPanel, "loginPanel");
 				//System.out.println("Account Successfully registered\n");
-
+			
 			
 			}catch(SQLException se){
 				//Handle errors for JDBC
@@ -410,6 +416,7 @@ public class BankGUI2 {
 				}//end finally try
 			}//end try
 		}//closes if statement
+		}// close another if statement
 			}
 	}
 	
