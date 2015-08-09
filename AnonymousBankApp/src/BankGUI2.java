@@ -318,6 +318,12 @@ public class BankGUI2 {
 	class logPage implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			cardLayout.show(mainPanel, "loginPanel");
+			nameRegField.setText("");
+			usernameRegField.setText("");
+			passwordRegField.setText("");
+			emailRegField.setText("");
+			birthdateRegField.setText("");
+		
 		}
 	}
 	
@@ -327,6 +333,8 @@ public class BankGUI2 {
 	class regPage implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			cardLayout.show(mainPanel, "registerPanel");
+			usernameLoginField.setText("");
+			passwordLoginField.setText("");
 		}
 	}
 	
@@ -429,12 +437,17 @@ public class BankGUI2 {
 				conn.close();
 				JOptionPane.showMessageDialog(popupMessage, "Account Successfully registered\n");
 				cardLayout.show(mainPanel, "loginPanel");
-				//System.out.println("Account Successfully registered\n");
+				//clears text values after registration
+				nameRegField.setText("");
+				usernameRegField.setText("");
+				passwordRegField.setText("");
+				emailRegField.setText("");
+				birthdateRegField.setText("");
 			
 			
 			}catch(SQLException se){
 				//Handle errors for JDBC
-				se.printStackTrace();
+				JOptionPane.showMessageDialog(popupMessage, "Incorrect Date Format.\n");
 			}catch(Exception e1){
 				//Handle errors for Class.forName
 				e1.printStackTrace();
@@ -530,21 +543,28 @@ public class BankGUI2 {
 			    		  //checks whether user account is available or disabled
 			    		  //checks the attempts of user
 			    		  if(status.equals("available")){
-			    			 
+			    			  
+			    			 //logged in message pops
 			    			  JOptionPane.showMessageDialog(popupMessage, "Logged in.\n");
-			    			 //ardLayout.show(mainPanel, "statementPanel");
-			    			  //method for bank statement
-			    			   bankstatement(username);
+			    			 // closes connection from login 
+			    			  //go to statement panel
+			    			  //do bankstatement method
+			    			  conn.close();
+			    			  cardLayout.show(mainPanel, "statementPanel");
+			    			  usernameLoginField.setText("");
+			    			  passwordLoginField.setText("");
+			    			  bankstatement(username);
+			    			  
 			    			  
 			    	  	  }else{
 			    	  		JOptionPane.showMessageDialog(popupMessage, "Account is disabled.\n"
 			    	  				+ "Please call Customer Service.\n");
-			    	  	
+			    	  		 conn.close();
 			    	  	  }
 			    	 
 			    	  }	  
 			   }
-				 conn.close();
+				
 
 			}catch(SQLException se){
 				//Handle errors for JDBC
@@ -571,7 +591,7 @@ public class BankGUI2 {
 	
 	//method to check statements of the current user
 	public  void bankstatement(String username){
-		cardLayout.show(mainPanel, "statementPanel");
+		
 		
 		Statement stmt = null;
 		Connection conn = null;
