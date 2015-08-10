@@ -696,7 +696,7 @@ public class BankGUI2 {
 					return false;
 				}
 
-				if(checkDigit == false){
+				if(!checkDigit){
 
 					if(Character.isLetter(c)){
 
@@ -705,7 +705,7 @@ public class BankGUI2 {
 					}
 				}
 
-				if(checkLetter == false){
+				if(!checkLetter){
 
 					if(Character.isDigit(c)){
 
@@ -740,7 +740,7 @@ public class BankGUI2 {
 	      PreparedStatement sttt =conn.prepareStatement(q1);
 	      sttt.setString(1,username);
 	      ResultSet resultSett = sttt.executeQuery();
-	      
+
 	      if (!resultSett.next() ) {
 			   return false;
 		   }else{
