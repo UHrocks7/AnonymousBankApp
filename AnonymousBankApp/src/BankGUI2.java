@@ -50,7 +50,7 @@ public class BankGUI2 {
 	private static final String DB_URL = "jdbc:mysql://localhost:3306/teamanon";
 	//  Database credentials
 	private static final String USER = "root";
-	private static final String PASS = "teamano";
+	private static final String PASS = "cmpukahi";
 	
 	
 	private JFrame frame;
@@ -682,19 +682,49 @@ public class BankGUI2 {
 	 */
 	public static boolean isValid(String password) {
 		//returns true or false depending if condition is met
+		boolean checkDigit = false;
+		boolean checkLetter = false;
+
 		if (password.length() < 8) {
 			return false;
 		} else {
 			char c;
 		
-			for (int i = 0; i < password.length() - 1; i++) {
+			for (int i = 0; i <= password.length() - 1; i++) {
 				c = password.charAt(i);
 				if (!Character.isLetterOrDigit(c)) {
 					return false;
 				}
+
+				if(checkDigit == false){
+
+					if(Character.isLetter(c)){
+
+						checkDigit = true;
+
+					}
+				}
+
+				if(checkLetter == false){
+
+					if(Character.isDigit(c)){
+
+						checkLetter = true;
+
+					}
+				}
 			}
 		}
-		return true;
+
+		if(checkDigit && checkLetter) {
+			return true;
+
+		}
+
+		else{
+
+			return false;
+		}
 	}
 	// checks whether username exist or not for registration
 	public static boolean UserExist(String username) {

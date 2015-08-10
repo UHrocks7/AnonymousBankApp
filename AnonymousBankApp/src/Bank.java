@@ -9,7 +9,7 @@ public class Bank {
 	   private static final String DB_URL = "jdbc:mysql://localhost:3306/teamanon";
 	   //  Database credentials
 	   private static final String USER = "root";
-	   private static final String PASS = "teamano";
+	   private static final String PASS = "cmpukahi";
 	   static int countattempt = 0;
 	   
 	   //main method
@@ -237,11 +237,12 @@ public class Bank {
 			          ResultSet rss = stmt2.executeQuery(qq);
 			          //get the current status of account/
 			          while (rss.next()) {
-			        	  status = rss.toString();
+			        	  status = rss.getString("status");
 			          }
 		    		  //checks whether user account is available or disabled
 		    		  //checks the attempts of user
-		    		  if(status == "available"){
+					  System.out.println(status);
+		    		  if(status.equals("available")){
 		    			  System.out.println("Logged in.\n");
 		    			  //method for bankstatement
 		    			  bankstatement(username);
@@ -292,27 +293,32 @@ public class Bank {
 				//Register JDBC driver
 				Class.forName("com.mysql.jdbc.Driver");
 				//Open a connection
-				conn = DriverManager.getConnection(DB_URL,USER,PASS);
+				conn = DriverManager.getConnection(DB_URL, USER, PASS);
 				stmt = conn.createStatement();
+				int check = 0;
 
-				System.out.println("Please choose an account to check balance");
-				System.out.println("1. Checking");
-				System.out.println("2. Savings");
+				while(check == 0) {
+
+					System.out.println("Please choose an account to check balance");
+					System.out.println("1. Checking");
+					System.out.println("2. Savings");
 
 
-				//stores user selction
-				selection = in.nextInt();
+					//stores user selction
+					selection = in.nextInt();
 
-				//chooses account type based on user selection
-				if(selection == 1){
+					//chooses account type based on user selection
+					if (selection == 1) {
 
-					account = "checking";
+						account = "checking";
+						check = 1;
 
-				}
+					} else if (selection == 2) {
 
-				else if(selection == 2){
+						account = "savings";
+						check = 1;
 
-					account = "savings";
+					}
 
 				}
 
