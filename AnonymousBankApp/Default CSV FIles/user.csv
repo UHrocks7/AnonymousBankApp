@@ -1,6 +1,6 @@
-iduser,name,username,password,email,birthdate
-1,Joe,Kelly,boston25,jk@redsox.com,9/9/1980
-2,Mike Trout,Trout,angels07,mt@angel.com,9/8/1990
-3,Chase,chasem,cmp24567,chasem7@hawaii.edu,6/22/1994
-4,Chris,testchris,chrisc08,chris@hawaii.edu,8/22/1994
-5,Jay,testjay,jayj2765,jay@hawaii.edu,4/9/1990
+iduser,name,username,password,email,birthdate,status
+1,Joe,Kelly,boston25,jk@redsox.com,9/9/1980,available
+2,Mike Trout,Trout,angels07,mt@angel.com,9/8/1990,available
+3,Chase,chasem,cmp24567,chasem7@hawaii.edu,6/22/1994,available
+4,Chris,testchris,chrisc08,chris@hawaii.edu,8/22/1994,available
+5,Jay,testjay,jayj2765,jay@hawaii.edu,4/9/1990,available
