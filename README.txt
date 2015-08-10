@@ -54,3 +54,25 @@ Jaimar S: Fixed password creation/verification function of "Bank.java" to make s
 -Fix login page to handle improper credentials
 -Fix registration page to access database to store registration record
 -Add error handling for "bankstatement()" function of "Bank.java"
+
+_____________________________________________________________________________________________________________________________
+
+-------Team Anonymous- Bank App, Version 3-------
+
+----Team Members----
+Chris Caoagdan
+Chase Matayoshi
+Jaimar John Sison
+
+----The division of tasks between team members----
+Chris C: Helped out with testing program functionality. Updated "user.csv" file so that proper information can be imported
+into an SQL table. Did part of the "Final Security Review" section of report.
+
+Chase M: Looked for certain bugs and errors in "bankstatement" function of program. Did much of the "Incident Response Plan" 
+of report.
+
+Jaimar S: Created "BankGUI2.java" based on "BankGUI.java". Helped make GUI function better with our intended functionality.
+
+----Closing thoughts on project----
+Overall, we feel that we did our best to come up with the program that we have completed. We believe that if we have more
+time, like more than 5-6 weeks to complete this project, we might have a better program with enhanced functionality.
