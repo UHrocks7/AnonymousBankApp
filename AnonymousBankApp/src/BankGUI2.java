@@ -250,7 +250,7 @@ public class BankGUI2 {
 		registerPanel.add(birthdateRegField, gbc_birthdateRegField);
 		birthdateRegField.setColumns(10);
 		
-		JLabel lblyyyymmdd = new JLabel("(YYYY/MM/DD)");
+		JLabel lblyyyymmdd = new JLabel("(YYYY/MM/DD) or (YYYY-MM-DD)");
 		GridBagConstraints gbc_lblyyyymmdd = new GridBagConstraints();
 		gbc_lblyyyymmdd.insets = new Insets(0, 0, 5, 5);
 		gbc_lblyyyymmdd.gridx = 1;
